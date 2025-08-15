@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ chai.name }} - Details</title>
+    <style>
+        body {
+            background-color: rgb(3, 3, 48);
+            color: whitesmoke;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .chai-detail {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .chai-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .back-link {
+            color: #ffd700;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chai-detail">
+            <h1>{{ chai.name }}</h1>
+            {% if chai.image %}
+                <img src="{{ chai.image.url }}" alt="{{ chai.name }}" class="chai-image">
+            {% endif %}
+            <p><strong>Type:</strong> {{ chai.get_type_display }}</p>
+            <p><strong>Added:</strong> {{ chai.data_added }}</p>
+            <a href="{% url 'all_chai' %}" class="back-link">← Back to List</a>
+        </div>
+    </div>
+</body>
+</html>

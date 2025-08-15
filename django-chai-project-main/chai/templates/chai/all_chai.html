@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chai Collection</title>
+    <style>
+        body {
+            background-color: rgb(3, 3, 48);
+            color: whitesmoke;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .chai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .chai-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .form-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .form-section input, .form-section select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 4px;
+        }
+        button {
+            background: #ffd700;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Our Chai Collection</h1>
+        
+        <div class="form-section">
+            <h2>Add New Chai</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Add Chai</button>
+            </form>
+        </div>
+
+        <div class="chai-grid">
+            {% for chai in chais %}
+                <div class="chai-card">
+                    {% if chai.image %}
+                        <img src="{{ chai.image.url }}" alt="{{ chai.name }}" style="width: 100%; border-radius: 4px;">
+                    {% endif %}
+                    <h2>{{ chai.name }}</h2>
+                    <p>Type: {{ chai.get_type_display }}</p>
+                    <p>Added: {{ chai.data_added }}</p>
+                    <a href="{% url 'chai_detail' chai.id %}" style="color: #ffd700; text-decoration: none;">
+                        View Details →
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
